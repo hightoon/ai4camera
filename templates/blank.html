@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title></title>
+<link href="/static/css/main.css" rel="stylesheet" type="text/css" />
+<link href="/static/vakata-jstree-a6a0d0d/dist/themes/default/style.min.css" rel="stylesheet" type="text/css" />
+<!--link href="/static/css/style.min.css" type="text/css" rel="stylesheet" /-->
+<!--link href="/static/css/font-awesome.css" type="text/css" rel="stylesheet" /-->
+<!--[if IE 8]><link href="/static/css/ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
+
+<script type="text/javascript" src="/static/js/plugins/charts/excanvas.min.js"></script>
+<script type="text/javascript" src="/static/js/plugins/charts/jquery.flot.js"></script>
+<script type="text/javascript" src="/static/js/plugins/charts/jquery.flot.resize.js"></script>
+<script type="text/javascript" src="/static/js/plugins/charts/jquery.sparkline.min.js"></script>
+
+<script type="text/javascript" src="/static/js/plugins/ui/jquery.easytabs.min.js"></script>
+<script type="text/javascript" src="/static/js/plugins/ui/jquery.collapsible.min.js"></script>
+<script type="text/javascript" src="/static/js/plugins/ui/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="/static/js/plugins/ui/prettify.js"></script>
+<script type="text/javascript" src="/static/js/plugins/ui/jquery.bootbox.min.js"></script>
+<script type="text/javascript" src="/static/js/plugins/ui/jquery.colorpicker.js"></script>
+<script type="text/javascript" src="/static/js/plugins/ui/jquery.timepicker.min.js"></script>
+<script type="text/javascript" src="/static/js/plugins/ui/jquery.jgrowl.js"></script>
+<script type="text/javascript" src="/static/js/plugins/ui/jquery.fancybox.js"></script>
+<script type="text/javascript" src="/static/js/plugins/ui/jquery.fullcalendar.min.js"></script>
+<script type="text/javascript" src="/static/js/plugins/ui/jquery.elfinder.js"></script>
+
+<script type="text/javascript" src="/static/js/plugins/uploader/plupload.js"></script>
+<script type="text/javascript" src="/static/js/plugins/uploader/plupload.html4.js"></script>
+<script type="text/javascript" src="/static/js/plugins/uploader/plupload.html5.js"></script>
+<script type="text/javascript" src="/static/js/plugins/uploader/jquery.plupload.queue.js"></script>
+
+<script type="text/javascript" src="/static/js/plugins/forms/jquery.uniform.min.js"></script>
+<script type="text/javascript" src="/static/js/plugins/forms/jquery.autosize.js"></script>
+<script type="text/javascript" src="/static/js/plugins/forms/jquery.inputlimiter.min.js"></script>
+<script type="text/javascript" src="/static/js/plugins/forms/jquery.tagsinput.min.js"></script>
+<script type="text/javascript" src="/static/js/plugins/forms/jquery.inputmask.js"></script>
+<script type="text/javascript" src="/static/js/plugins/forms/jquery.select2.min.js"></script>
+<script type="text/javascript" src="/static/js/plugins/forms/jquery.listbox.js"></script>
+<script type="text/javascript" src="/static/js/plugins/forms/jquery.validation.js"></script>
+<script type="text/javascript" src="/static/js/plugins/forms/jquery.validationEngine-en.js"></script>
+<script type="text/javascript" src="/static/js/plugins/forms/jquery.form.wizard.js"></script>
+<script type="text/javascript" src="/static/js/plugins/forms/jquery.form.js"></script>
+
+<script type="text/javascript" src="/static/js/plugins/tables/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" src="/static/js/files/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/files/functions.js"></script>
+<script type="text/javascript" src="/static/js/helper.js"></script>
+<!--script type="text/javascript" src="/static/vakata-jstree-a6a0d0d/dist/jstree.min.js"></script-->
+
+</head>
+
+<body>
+
+	<!-- Fixed top -->
+	<div id="top">
+		<div class="fixed">
+			<a href="index.html" title="" class="logo"><img src="/static/img/logo.png" alt="" /></a>
+			<ul class="top-menu">
+				<li><a class="fullview"></a></li>
+				<li><a class="showmenu"></a></li>
+				<li class="dropdown">
+					<a class="user-menu" data-toggle="dropdown"><img src="img/userpic.png" alt="" /><span>您好, {{usersname}}! <b class="caret"></b></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#" title=""><i class="icon-user"></i>个人资料</a></li>
+						<li><a href="/logout" title=""><i class="icon-remove"></i>退出</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /fixed top -->
+
+
+	<!-- Content container -->
+	<div id="container">
+
+		<!-- Sidebar -->
+		<div id="sidebar">
+
+			<div class="sidebar-tabs" id="sidebar-tabs">
+
+		        <div id="general">
+				    <!-- Main navigation -->
+			        <ul class="navigation widget">
+			            <li id="navadd">
+			            	<a href="/face-recognition">
+			            		<i class="icon-tags"></i>人脸识别
+			            	</a>
+			            </li>
+			            <li id="navcommsrv">
+			            	<a href="/pav-detect">
+			            		<i class="icon-home"></i>行人检测
+			            	</a>
+			            </li>
+			            <li id="navinfo">
+			            	<a href="/pav-match">
+			            		<i class="icon-globe"></i>人脸匹配
+			            	</a>
+			            </li>
+			            <li><a href="/distribution" title=""><i class="icon-signal"></i>biaoqing</a></li>
+			            <!--li><a href="/termmng" title=""><i class="icon-cloud"></i>终端管理</a></li-->
+			            <li>
+			            	<a href="/usrmng/users" title="" onclick="untoggleSidebarItems();">
+			            		<i class="icon-user"></i>qita
+			            	</a>
+			            </li>
+						<!--li>
+			            	<a href="/terminals" title="" onclick="untoggleSidebarItems();">
+			            		<i class="icon-phone"></i>位点管理
+			            	</a>
+			            </li-->
+			        </ul>
+			        <!-- /main navigation -->
+
+		        </div>
+
+		    </div>
+		</div>
+		<!-- /sidebar -->
+
+
+		<!-- Content -->
+		<div id="content">
+
+		    <!-- Content wrapper -->
+		    <div class="wrapper">
+
+			    <!-- Action tabs -->
+			    <div class="actions-wrapper">
+				    <div class="actions">
+
+				    	<div id="user-stats">
+				    		<ul class="round-buttons">
+				    			<!--li><div class="depth"><a href="/ad/add" title="添加视频" class="tip">
+				    				<i class="icon-plus"></i></a></div>
+				    			</li-->
+					            <li><div class="depth"><a href="/ad/video" title="renlian" class="tip"><i class="icon-tags"></i></a></div></li>
+					            <li><div class="depth"><a href="/commsrv/dancing" title="xingren" class="tip"><i class="icon-globe"></i></a></div></li>
+					            <li><div class="depth"><a href="/usrmng/users" title="pipie" class="tip"><i class="icon-home"></i></a></div></li>
+								<!--li><div class="depth"><a href="/terminals" title="位点管理" class="tip"><i class="icon-phone"></i></a></div></li-->
+					            <!--li><div class="depth"><a href="/datamng" title="数据管理" class="tip"><i class="icon-signal"></i></a></div></li>
+					            <li><div class="depth"><a href="/termmng" title="终端管理" class="tip"><i class="icon-cloud"></i></a></div></li>
+					            <li><div class="depth"><a href="/usrmng" title="用户管理" class="tip"><i class="icon-user"></i></a></div></li-->
+					        </ul>
+					        <!--ul class="rount-buttons">
+					        	<li><div class="depth"><a href="/ad/add" title="视频" class="tip"><i class="icon-plus"></i></a></div></li>
+					        </ul-->
+				    	</div>
+
+				    	<ul class="action-tabs">
+				    		<li><a href="#user-stats" title="">快捷方式</a></li>
+				    	</ul>
+				    </div>
+				</div>
+			    <!-- /action tabs -->
+
+			    {%  block content %} {% endblock %}
+		    </div>
+		    <!-- /content wrapper -->
+
+		</div>
+		<!-- /content -->
+
+	</div>
+	<!-- /content container -->
+
+
+	<!-- Footer -->
+	<div id="footer">
+		<div class="copyrights">Copyright &copy; 2016.Excellent Networks All rights reserved.</div>
+	</div>
+	<!-- /footer -->
+
+	{% block tailscript %} {% endblock %}
+</body>
+</html>

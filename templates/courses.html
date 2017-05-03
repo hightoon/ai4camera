@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>Fung 110</title>
+    <link rel="stylesheet" href="/static/node_modules/weui/dist/style/weui.css"/>
+</head>
+<body ontouchstart>
+    <div class="container" id="container">
+        <div class="weui_cells_title">
+            <img src="/static/assets/110logo.jpg" style="max-width: 99%;display: block;
+            margin-left:auto;margin-right:auto" />
+        </div>
+        <div class="weui_cells weui_cells_checkbox">
+            {% for course in courses %}
+                <label class="weui_cell weui_check_label" for={{course.id}}>
+                    <div class="weui_cell_hd">
+                        <input type="checkbox" class="weui_check" name="coursea" id={{course.id}}>
+                        <i class="weui_icon_checked"></i>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>{{course.name}}(时间/Time: {{course.datetime.split()[0]}}; 价格/Price: {{course.price}} Yuan)
+                        </p>
+                    </div>
+            </label>
+            {% endfor %}
+        </div>
+        <br/>
+
+        <div class="button_sp_area">
+            <a onclick="javascript:postCheckByIds('/courses',
+                ['lecture92401', 'lecture92402', 'lecture92403', 'lecture92501', 'lecture92502',
+                'lecture92503', 'lecture92504', 'lecture92505']);" 
+            class="weui_btn weui_btn_primary">下一步(Next)</a>
+        </div>
+
+        <!--div class="weui_grids">
+            <a href="javascript:;" class="weui_grid">
+                <p class="weui_grid_label">
+                    上一页
+                </p>
+            </a>
+            <a href="javascript:;" class="weui_grid" display="none">
+                <p class="weui_grid_label">&nbsp</p>
+            </a>
+            <a href="javascript:;" class="weui_grid">
+                <p class="weui_grid_label">
+                    下一页
+                </p>
+            </a>
+        </div-->
+
+    </div>
+    <script src="/static/js/helper.js"></script>
+</body>
+</html>

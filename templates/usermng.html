@@ -1,0 +1,173 @@
+{% extends "blank.html" %}
+
+{% block content %}
+
+<h5 class="widget-name"><i class="icon-table"></i>用户管理</h5>
+
+
+<div class="widget">
+    <div class="row-fluid well">
+        <h6 style="text-align: center">添加用户</h6>
+        <div class="control-group" style="vertical-align: center">
+        <form action="/usrmng/user/add" method="POST">
+            <div class="span2">
+                <label class="control-label">乡镇街道</label>
+                <!--input type="text" name="townname" class="span12" /-->
+                <select name="townname" class="styled"
+                 id="townname" onchange="getCountries();">
+                    <option value="">请选择</option>
+                    {% for t in towns %}
+                        <option value={{t.cid}};{{t.townname}};{{t.towncode}}>
+                            {{t.townname}}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="span2">
+                <label class="control-label">行政村</label>
+                <!--input type="text" name="country" class="span12" /-->
+                <div class="controls">
+                    <select name="countryname" id="countryname" class="styled"
+                     onchange="getTerminals();">
+                    </select>
+	            </div>
+            </div>
+            <div class="span2">
+                <label class="control-label">位点信息</label>
+                <!--input type="text" name="devno" class="span12" /-->
+                <div class="controls">
+                    <select name="devno" id="devno" class="styled">
+                    </select>
+	            </div>
+            </div>
+            <div class="span1">
+                <label class="control-label">编号</label>
+                <!--input type="text" name="seqno" class="span12" /-->
+                <select name="seqno">
+                    {% for i in range(1, 21) %}
+                        <option value={{i}}>{{'%03d'%(i)}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="span2">
+                <label class="control-label">卡号</label>
+                <input type="text" name="cardno" class="span12" id="cardno-input" placeholder="请刷卡或输入卡号" onkeydown="function(){return false;}" />
+            </div>
+            <div class="span1">
+                <label class="control-label">姓名</label>
+                <input type="text" name="name" class="span12" />
+            </div>
+            <div class="span2">
+                <label class="control-label">手机</label>
+                <input type="text" name="phone" class="span12" />
+            </div>
+            <div class="span11">
+                <label class="control-label">&nbsp</label>
+                <button type="submit" class="btn-xsmall btn-primary pull-right" style="margin-bottom: 10px; margin-top: -20px">确定添加</button>
+            </div>
+        </form>
+        </div>
+        <br><br><br>
+    </div>
+</div>
+
+<!-- Media datatable -->
+<div class="widget">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <h6>用户列表</h6>
+            <div class="nav pull-right">
+                <a href="#" class="dropdown-toggle navbar-icon" data-toggle="dropdown"><i class="icon-cog"></i></a>
+                <!--ul class="dropdown-menu pull-right">
+                    <li><a href="#"><i class="icon-plus"></i>Add new option</a></li>
+                    <li><a href="#"><i class="icon-reorder"></i>View statement</a></li>
+                    <li><a href="#"><i class="icon-cogs"></i>Parameters</a></li>
+                </ul-->
+            </div>
+        </div>
+    </div>
+    <div class="table-overflow">
+        <table class="table table-striped table-bordered media-table" id="image-table">
+            <thead>
+                <tr>
+                    <th>乡镇</th>
+                    <th>行政村</th>
+                    <th>位点</th>
+                    <th>编号</th>
+                    <th>姓名</th>
+                    <th>手机</th>
+                    <th>卡号</th>
+                    <th>投放次数</th>
+                    <th class="actions-column">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{user.town}}</td>
+                        <td>{{user.country}}</td>
+                        <td>{{user.devno}}</td>
+                        <td>{{user.seqno}}</td>
+                        <td><input type="text" name=username-{{user.cid}} id=username-{{user.cid}} value={{user.name}}></input></td>
+                        <td><input type="text" name=userphone-{{user.cid}} id=userphone-{{user.cid}} value={{user.phone}}></input></td>
+                        <td><input type="text" name=usercard-{{user.cid}} id=usercard-{{user.cid}} value={{user.cardno}}></input></td>
+                        <td>{{user.count}}</td>
+                        <td>
+                            <ul class="navbar-icons">
+                                <li>
+                                    <a class="tip" title="提交修改" onclick="submit_change({{user.cid}});">
+                                        <i class="icon-edit"></i>
+                                    </a>
+                                    <a href="/usrmng/del/{{user.cid}}" class="tip" title="删除">
+                                        <i class="icon-remove"></i>
+                                    </a>
+                                </li>
+                                <!--li><a href="#" class="tip" title="编辑"><i class="icon-edit"></i></a></li-->
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <!--tr>
+                    <td>图片001</td>
+                    <td><a href="/static/img/demo/big.jpg" title="" class="lightbox"><img src="/static/img/demo/users/face1.png" alt="" /></a></td>
+                    <td><a href="/static/img/demo/big.jpg" title="" class="lightbox"><img src="static/img/demo/users/face1.png" alt="" /></a></td>
+                    <td>
+                        <ul class="navbar-icons">
+                            <li><a href="#" class="tip" title="删除"><i class="icon-remove"></i></a></li>
+                        </ul>
+                    </td>
+                </tr-->
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- /media datatable -->
+
+{% endblock %}
+
+{% block tailscript %}
+
+<script type="text/javascript" src="/static/js/jquery.dataTables.min.js"></script>
+<script>
+    function submit_change(cid) {
+        $.get("/usrmng/edit",
+            {"cid": cid, "name": $('#username-'+cid).val(),
+             "phone": $('#userphone-'+cid).val(),
+             "cardno": $('#usercard-'+cid).val()})
+         .done(function(data) {
+             if (data === 'ok') {
+                 alert('已提交')
+             } else {
+                 alert('提交失败!');
+             }
+         });
+    }
+
+    $(document).ready(function() {
+        $('#image-table').DataTable();
+    } );
+    //untoggleSidebarItems();
+    $('#cardno-input').focus();
+</script>
+
+{% endblock %}

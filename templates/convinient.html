@@ -1,0 +1,98 @@
+{% extends "blank.html" %}
+
+{% block content %}
+
+<h5 class="widget-name"><i class="icon-table"></i>便民信息</h5>
+
+
+<div class="widget">
+    <div class="row-fluid well">
+        <h6 style="text-align: center">添加图片</h6>
+        <div class="control-group" style="vertical-align: center">
+        <form action="/opengov/convinient/add" method="POST" enctype="multipart/form-data">
+            <div class="span3">
+                <label class="control-label">文件名</label>
+                <input type="text" name="picname" class="span12" placeholder="与上传文件相同可不填" />
+            </div>
+            <div class="span3">
+                <label class="control-label">添加文件</label><input type="file" name="picfile" class="styled" 
+                class="span12">
+            </div>
+            <div class="span3">
+                <label class="control-label">添加文字描述(.txt文件)</label><input type="file" name="desctext" class="styled" 
+                class="span12" placeholder="请上传txt文件，文件内容必须为指定格式">
+            </div>
+            <div class="span3">
+                <label class="control-label">&nbsp</label>
+                <button type="submit" class="btn-small btn-primary pull-right">确定添加</button>
+            </div>
+        </form>
+        </div>
+        <br><br><br>
+    </div>
+</div>
+
+<!-- Media datatable -->
+<div class="widget">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <h6>图片列表</h6>
+            <div class="nav pull-right">
+                <a href="#" class="dropdown-toggle navbar-icon" data-toggle="dropdown"><i class="icon-cog"></i></a>
+                <!--ul class="dropdown-menu pull-right">
+                    <li><a href="#"><i class="icon-plus"></i>Add new option</a></li>
+                    <li><a href="#"><i class="icon-reorder"></i>View statement</a></li>
+                    <li><a href="#"><i class="icon-cogs"></i>Parameters</a></li>
+                </ul-->
+            </div>
+        </div>
+    </div>
+    <div class="table-overflow">
+        <table class="table table-striped table-bordered media-table" id="image-table">
+            <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>图片</th>
+                    <th>文字描述</th>
+                    <th class="actions-column">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in infoitems %}
+                    <tr>
+                        <td>{{item[0]}}</td>
+                        <td><a href="{{item[1]}}" class="lightbox">
+                            <img src="{{item[1]}}" alt="" width="40" height="30" />
+                        </a></td>
+                        <td>
+                            <a href="{{item[2]}}" class="lightbox">{{item[2].split('/')[-1]}}</a>
+                        </td>
+                        <td>
+                            <ul class="navbar-icons">
+                                <li>
+                                    <a href="/opengov/breaking/del/{{item[-1]}}" class="tip" title="删除">
+                                        <i class="icon-remove"></i>
+                                    </a>
+                                </li>
+                                <!--li><a href="#" class="tip" title="编辑"><i class="icon-edit"></i></a></li-->
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- /media datatable -->
+
+{% endblock %}
+
+{% block tailscript %}
+
+<script>
+    //untoggleSidebarItems();
+    //$("#navadd").toggleClass("active");
+</script>
+
+{% endblock %}

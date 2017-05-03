@@ -1,0 +1,85 @@
+{% extends "blank.html" %}
+
+{% block content %}
+
+<h5 class="widget-name"><i class="icon-table"></i>广场舞</h5>
+
+<div class="widget">
+    <div class="row-fluid well">
+        <h6 style="text-align: center">添加广场舞视频</h6>
+        <div class="control-group" style="vertical-align: center">
+        <form action="/dancing/video" method="POST" enctype="multipart/form-data">
+            <div class="span4"><label class="control-label">文件名</label>
+                <input type="text" name="filename" class="span12" placeholder="与上传文件相同可不填" />
+            </div>
+            <div class="span4"><label class="control-label">添加文件</label><input type="file" name="file" 
+                class="styled" class="span12"></div>
+            <div class="span4">
+                <label class="control-label">&nbsp</label>
+                <button type="submit" class="btn-small btn-primary pull-right">确定添加</button>
+            </div>
+        </form>
+        </div>
+        <br><br><br>
+    </div>
+</div>
+
+<!-- Media datatable -->
+<div class="widget">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <h6>视频列表</h6>
+            <div class="nav pull-right">
+                <a href="#" class="dropdown-toggle navbar-icon" data-toggle="dropdown"><i class="icon-cog"></i></a>
+                <!--ul class="dropdown-menu pull-right">
+                    <li><a href="#"><i class="icon-plus"></i>Add new option</a></li>
+                    <li><a href="#"><i class="icon-reorder"></i>View statement</a></li>
+                    <li><a href="#"><i class="icon-cogs"></i>Parameters</a></li>
+                </ul-->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="table-overflow">
+        <table class="table table-striped table-bordered media-table" id="image-table">
+            <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>文件信息</th>
+                    <th>区域</th>
+                    <th class="actions-column">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vd in videoinfo %}
+                <tr>
+                    <td>{{vd[1]}}</td>
+                    <td class="file-info">
+                        <span><strong>文件大小:</strong> {{vd[2]}} Kb</span>
+                        <span><strong>文件格式:</strong> {{vd[3]}}</span>
+                    </td>
+                    <td>{{vd[4]}}</td>
+                    <td>
+                        <ul class="navbar-icons">
+                            <li><a href="/dancing/video/del/{{vd[0]}}" class="tip" title="删除文件"><i class="icon-remove"></i></a></li>
+                        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- /media datatable -->
+
+{% endblock %}
+
+{% block tailscript %}
+
+<script>
+    //untoggleSidebarItems();
+    $("#navadd").toggleClass("active");
+</script>
+
+{% endblock %}

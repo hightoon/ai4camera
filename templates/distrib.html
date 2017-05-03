@@ -1,0 +1,96 @@
+{% extends "blank.html" %}
+
+{% block content %}
+
+<h5 class="widget-name"><i class="icon-table"></i>位点管理</h5>
+
+
+<div class="widget">
+    <div class="row-fluid well">
+        <h6 style="text-align: center">点位发布管理</h6>
+        <div class="control-group"  style="vertical-align: center">
+            <div class="span5"></div>
+            <div class="span7" id="dist-tree" style="font-size: large"></div>
+        </div>
+        <div style="text-align:center">
+            <button class="btn-small btn-primary" onclick="submit_selected()">确定</div>
+        <br><br><br>
+    </div>
+</div>
+
+<!-- Media datatable -->
+<!-- /media datatable -->
+
+{% endblock %}
+
+{% block tailscript %}
+<script src="https://use.fontawesome.com/e283c0d3c0.js"></script>
+<!--script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script-->
+<script type="text/javascript" src="/static/js/jquery-2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jstree.min.js"></script>
+<script>
+    var jQuery_2_1_1 = $.noConflict(true);
+    var selected = null;
+    getGeoTree(function(data){
+        jQuery_2_1_1('#dist-tree').jstree({
+        core: {
+            data: data.data,
+            //check_callback: false
+        },
+        checkbox: {
+            three_state : true, // to avoid that fact that checking a node also check others
+            whole_node : false,  // to avoid checking the box just clicking the node
+            tie_selection : false // for checking without selecting and selecting without checking
+        },
+        plugins: ['checkbox']
+        })
+        .on("check_node.jstree uncheck_node.jstree", function(e, data) {
+            //unckeck
+            if (!data.node.state.checked) {
+                if (data.node.children.length) {
+                    for (var n of data.node.children_d) {
+                        data.selected.splice(data.selected.indexOf(n), 1);
+                    }
+                } else {
+                    // single node, automatically unchecked
+                }
+            }
+
+            //check
+            if (data.node.state.checked && data.node.children.length) {
+                if (data.node.children.length === data.node.children_d.length) {
+                    // last parent
+                    data.selected.splice(data.selected.indexOf(data.node.id), 1);
+                    for (var ch of data.node.children_d) {
+                        data.selected.push(ch);
+                    }
+                }
+                else {
+                    // not last parent
+                    for (var ch of data.node.children_d) {
+                        if (data.selected.indexOf(ch) === -1) {
+                            data.selected.push(ch);
+                        }
+                    }
+                    for (var ch of data.node.children) {
+                        if (data.selected.indexOf(ch) !== -1) {
+                            data.selected.splice(data.selected.indexOf(ch), 1);
+                        }
+                    }
+                    data.selected.splice(data.selected.indexOf(data.node.id), 1);
+                }
+            }
+            selected = data.selected;
+            //jQuery_2_1_1.jstree.plugins.checkbox();
+        });
+    });
+
+    function submit_selected() {
+        $.get('/set/selected', {selected: selected.join(';')})
+         .done(function(data){if (data === 'ok') alert("提交成功！")});
+    }
+
+</script>
+
+{% endblock %}

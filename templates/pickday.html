@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>Fung 110</title>
+    <link rel="stylesheet" href="/static/node_modules/weui/dist/style/weui.css"/>
+    <!--link rel="stylesheet" href="/static/node_modules/weui/src/example/example.css"/-->
+</head>
+<body ontouchstart>
+    <div class="container" id="container">
+        <div class="weui_cells_title">
+            <img src="/static/assets/110logo.jpg" style="max-width: 99%;display: block;
+            margin-left:auto;margin-right:auto" />
+        </div>
+        <!--div class="weui_cell weui_cell_select weui_select_after">
+            <div class="weui_cell_bd weui_cell_primary">
+                <select class="weui_select" name="myday" id="myday">
+                    <option value="sat">周六(Saturday)</option>
+                    <option value="sun">周日(Sunday)</option>
+                </select>
+            </div>
+        </div-->
+
+        <div class="weui_cells weui_cells_radio">
+            <label class="weui_cell weui_check_label" for="sat">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>星期六(Saturday)</p>
+                </div>
+                <div class="weui_cell_ft">
+                    <input type="radio" class="weui_check" name="radio1" id="sat" value="sat">
+                    <span class="weui_icon_checked"></span>
+                </div>
+            </label>
+            <label class="weui_cell weui_check_label" for="sun">
+
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>周日(Sunday)</p>
+                </div>
+                <div class="weui_cell_ft">
+                    <input type="radio" name="radio1" class="weui_check" id="sun" value="sun" checked="checked">
+                    <span class="weui_icon_checked"></span>
+                </div>
+            </label>
+        </div>
+
+        <br/>
+
+        <div class="button_sp_area">
+            <a onclick="javascript: postCheckByIds('/pickday', ['sat', 'sun']);" class="weui_btn weui_btn_primary">下一步(Next)</a>
+        </div>
+
+
+        <!--div class="weui_dialog_alert">
+            <div class="weui_mask"></div>
+            <div class="weui_dialog">
+                <div class="weui_dialog_hd">
+                  <strong class="weui_dialog_title">弹窗标题</strong>
+              </div>
+                <div class="weui_dialog_bd">弹窗内容，告知当前页面信息等</div>
+                <div class="weui_dialog_ft">
+                    <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+                </div>
+            </div>
+        </div-->
+
+        <!--div class="weui_grids">
+            <a href="javascript:;" class="weui_grid">
+                <p class="weui_grid_label">
+                    上一页
+                </p>
+            </a>
+            <a href="javascript:;" class="weui_grid" display="none">
+                <p class="weui_grid_label">&nbsp</p>
+            </a>
+            <a href="javascript:;" class="weui_grid">
+                <p class="weui_grid_label">
+                    下一页
+                </p>
+            </a>
+        </div-->
+    </div>
+    <script src="/static/js/helper.js"></script>
+</body>
+</html>
