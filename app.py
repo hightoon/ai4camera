@@ -3,8 +3,10 @@
 import os
 import os.path
 import json
+import socket
 import leveldb
 import userdb
+import shutil
 #import publisher
 
 from flask import (
@@ -20,7 +22,7 @@ from datetime import datetime
 from flask.sessions import SessionInterface
 from beaker.middleware import SessionMiddleware
 from werkzeug.utils import secure_filename
-
+from subprocess import call
 
 session_opts = {
     #'session.type': 'ext:memcached',
@@ -43,7 +45,15 @@ app.wsgi_app = SessionMiddleware(app.wsgi_app, session_opts)
 app.session_interface = BeakerSessionInterface()
 
 USER_FOLDER = './static/userdirs'
-
+BEHOST, BEPORT = 'localhost', 3002
+EXPHOST, EXPPORT = 'localhost', 3003
+GENHOST, GENPORT = 'localhost', 3004
+CSTHOST, CSTPORT = 'localhost', 3005
+PAV_UPLOAD_FOLDER = '../../other_nets/caffe_person/caffe-reid/testing/selfquery'
+EXP_UPLOAD_FOLDER = '/home/haitong/machinelearning/other_nets/emotion_agegender_recog/\
+emotion-recognition-neural-networks_haige/test'
+GENDER_UPLOAD_FOLDER = '/home/haitong/machinelearning/py-faster-rcnn/age_gender/'
+CHOPSTICK_UPLOAD_FOLDER = '/home/haitong/machinelearning/py-faster-rcnn/kuaizi_recog_hai/'
 #helper functions
 def create_userdir(usrfldr):
     if not os.path.exists(usrfldr):
@@ -140,6 +150,139 @@ def pav_det():
         op = userdb.DbOperation()
         user = op.get(session['user'])
         return render_template('pav-detect.html', usersname=user.name)
+    return redirect('/login')
+
+@app.route("/pav-match", methods=['GET', 'POST'])
+def pav_match():
+    if 'user' in session:
+        mp4file = '/static/img/nothinghere.mp4'
+        src_folder = '/home/haitong/machinelearning/py-faster-rcnn/tools/'
+        pva_det_outdir = '/home/haitong/machinelearning/other_nets/pva-faster-rcnn/tools/output/'
+        if request.method == 'POST':
+            video = request.files['videofile']
+            video.save(video.filename)
+            call(['rm', '-f', src_folder+'*.jpg'])
+            call(['rm', '-f', src_folder+'output/'+'*.jpg'])
+            call(['rm', '-f', pva_det_outdir+'*.jpg'])
+            call(['rm', '-f', 'proceeded.mp4'])
+            call(['rm', '-f', './static/proceeded.mp4'])
+            call(['ffmpeg', '-i', video.filename, '-r', '25', src_folder+'test_%d.jpg'])
+
+            for f in os.listdir(src_folder):
+                #print f
+                base, ext = os.path.splitext(f)
+                #if ext != 'jpg': continue
+                s = socket.socket(
+                    socket.AF_INET, socket.SOCK_STREAM)
+                s.connect(('localhost', 3001))   ### sending to localhost:3001
+                s.send(f)
+                resp = s.recv(1024)
+                print resp
+                #s = socket.socket(
+                #    socket.AF_INET, socket.SOCK_STREAM)
+                #s.connect((BEHOST, BEPORT))
+                #s.send('camera:' + f)
+                #resp = s.recv(1024)
+                #print resp
+                s.close()
+            call(['ffmpeg', '-f', 'image2', '-i', pva_det_outdir+r'test_%d.jpg',
+                 'proceeded.mp4'])
+            shutil.move('proceeded.mp4', './static/proceeded.mp4')
+            tgtfile = request.files['picfile']
+            print 'target file', tgtfile.filename
+            tgtpath = os.path.join(
+                PAV_UPLOAD_FOLDER,
+                tgtfile.filename)
+            tgtfile.save(tgtpath)
+            s = socket.socket(
+                socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((BEHOST, BEPORT))
+            s.send(tgtfile.filename)
+            resp = s.recv(1024)
+            print resp
+            mp4file = '/static/img/' + resp
+            s.close()
+        op = userdb.DbOperation()
+        user = op.get(session['user'])
+        return render_template('pav-match.html', usersname=user.name, mp4=mp4file)
+    return redirect('/login')
+
+@app.route("/expression", methods=['GET', 'POST'])
+def expression():
+    if 'user' in session:
+        resimg = 'undefined'
+        if request.method == 'POST':
+            tgtfile = request.files['picfile']
+            tgtpath = os.path.join(
+                EXP_UPLOAD_FOLDER,
+                tgtfile.filename)
+            tgtfile.save(tgtpath)
+            s = socket.socket(
+                socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((EXPHOST, EXPPORT))
+            s.send(tgtfile.filename)
+            resp = s.recv(1024)
+            print resp
+            resimg = '/static/img/' + tgtfile.filename
+            s.close()
+        op = userdb.DbOperation()
+        user = op.get(session['user'])
+        return render_template('expression.html', usersname=user.name,
+            result_img=resimg)
+    return redirect('/login')
+
+@app.route("/gender-detect", methods=['GET', 'POST'])
+def gender():
+    if 'user' in session:
+        result = u'请上传图片'
+        upload = ''
+        if request.method == 'POST':
+            tgtfile = request.files['picfile']
+            tgtpath = os.path.join(
+                GENDER_UPLOAD_FOLDER,
+                tgtfile.filename)
+            tgtfile.save(tgtpath)
+            upload = '/static/img/' + tgtfile.filename
+            shutil.copy(tgtpath, './static/img/')
+            s = socket.socket(
+                socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((GENHOST, GENPORT))
+            s.send(tgtfile.filename)
+            resp = s.recv(1024)
+            print resp
+            result = resp
+            s.close()
+        op = userdb.DbOperation()
+        user = op.get(session['user'])
+        return render_template('gender.html', usersname=user.name,
+            result=result, upload_file=upload)
+    return redirect('/login')
+
+@app.route("/chopstick-detect", methods=['GET', 'POST'])
+def chop():
+    if 'user' in session:
+        result = u'请上传图片'
+        upload = ''
+        if request.method == 'POST':
+            tgtfile = request.files['picfile']
+            tgtpath = os.path.join(
+                CHOPSTICK_UPLOAD_FOLDER,
+                tgtfile.filename)
+            tgtfile.save(tgtpath)
+            upload = '/static/img/' + tgtfile.filename
+            shutil.copy(tgtpath, './static/img/')
+            s = socket.socket(
+                socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((CSTHOST, CSTPORT))
+            s.send(tgtfile.filename)
+            resp = s.recv(1024)
+            print resp
+            result = resp
+            s.close()
+        op = userdb.DbOperation()
+        user = op.get(session['user'])
+        return render_template('chopstick.html', usersname=user.name,
+            result=result, upload_file=upload)
     return redirect('/login')
 
 @app.route("/ad/video", methods=['GET', 'POST'])
