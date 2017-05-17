@@ -61,7 +61,7 @@
 	<!-- Fixed top -->
 	<div id="top">
 		<div class="fixed">
-			<a href="index.html" title="" class="logo"><img src="/static/img/logo.png" alt="" /></a>
+			<a href="/face-recognition" title="" class="logo"><img src="/static/img/mylogo" alt="杭电智能图形处理平台" /></a>
 			<ul class="top-menu">
 				<li><a class="fullview"></a></li>
 				<li><a class="showmenu"></a></li>
@@ -104,18 +104,21 @@
 			            		<i class="icon-globe"></i>人脸匹配
 			            	</a>
 			            </li>
-			            <li><a href="/distribution" title=""><i class="icon-signal"></i>biaoqing</a></li>
-			            <!--li><a href="/termmng" title=""><i class="icon-cloud"></i>终端管理</a></li-->
 			            <li>
-			            	<a href="/usrmng/users" title="" onclick="untoggleSidebarItems();">
-			            		<i class="icon-user"></i>qita
+                      <a href="/expression">
+                          <i class="icon-signal"></i>表情识别
+                      </a>
+                  </li>
+			            <li>
+			            	<a href="/gender-detect">
+			            		<i class="icon-user"></i>性别识别
 			            	</a>
 			            </li>
-						<!--li>
-			            	<a href="/terminals" title="" onclick="untoggleSidebarItems();">
-			            		<i class="icon-phone"></i>位点管理
+						<li>
+			            	<a href="/chopstick-detect">
+			            		<i class="icon-phone"></i>筷子识别
 			            	</a>
-			            </li-->
+			            </li>
 			        </ul>
 			        <!-- /main navigation -->
 
@@ -138,17 +141,10 @@
 
 				    	<div id="user-stats">
 				    		<ul class="round-buttons">
-				    			<!--li><div class="depth"><a href="/ad/add" title="添加视频" class="tip">
-				    				<i class="icon-plus"></i></a></div>
-				    			</li-->
-					            <li><div class="depth"><a href="/ad/video" title="renlian" class="tip"><i class="icon-tags"></i></a></div></li>
-					            <li><div class="depth"><a href="/commsrv/dancing" title="xingren" class="tip"><i class="icon-globe"></i></a></div></li>
-					            <li><div class="depth"><a href="/usrmng/users" title="pipie" class="tip"><i class="icon-home"></i></a></div></li>
-								<!--li><div class="depth"><a href="/terminals" title="位点管理" class="tip"><i class="icon-phone"></i></a></div></li-->
-					            <!--li><div class="depth"><a href="/datamng" title="数据管理" class="tip"><i class="icon-signal"></i></a></div></li>
-					            <li><div class="depth"><a href="/termmng" title="终端管理" class="tip"><i class="icon-cloud"></i></a></div></li>
-					            <li><div class="depth"><a href="/usrmng" title="用户管理" class="tip"><i class="icon-user"></i></a></div></li-->
-					        </ul>
+					            <li><div class="depth"><a href="/face-recognition" title="人脸识别" class="tip"><i class="icon-tags"></i></a></div></li>
+					            <li><div class="depth"><a href="/pav-detect" title="行人检测" class="tip"><i class="icon-globe"></i></a></div></li>
+					            <li><div class="depth"><a href="/expression" title="表情识别" class="tip"><i class="icon-home"></i></a></div></li>
+					      </ul>
 					        <!--ul class="rount-buttons">
 					        	<li><div class="depth"><a href="/ad/add" title="视频" class="tip"><i class="icon-plus"></i></a></div></li>
 					        </ul-->
@@ -161,7 +157,7 @@
 				</div>
 			    <!-- /action tabs -->
 
-			    {%  block content %} {% endblock %}
+			  {%  block content %} {% endblock %}
 		    </div>
 		    <!-- /content wrapper -->
 
@@ -174,7 +170,7 @@
 
 	<!-- Footer -->
 	<div id="footer">
-		<div class="copyrights">Copyright &copy; 2016.Excellent Networks All rights reserved.</div>
+		<div class="copyrights">Copyright &copy; 2017.Excellent Networks All rights reserved.</div>
 	</div>
 	<!-- /footer -->
 

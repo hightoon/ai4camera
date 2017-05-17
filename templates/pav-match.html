@@ -1,0 +1,59 @@
+{% extends "blank.html" %}
+
+{% block content %}
+
+<h5 class="widget-name"><i class="icon-table"></i>人脸匹配</h5>
+<div class="widget">
+    <div class="row-fluid well">
+        <h6 style="text-align: center">添加相片</h6>
+        <div class="control-group" style="vertical-align: center">
+        <form action="/pav-match" method="POST" enctype="multipart/form-data">
+            <div class="span4">
+                <label class="control-label">添加文件</label><input type="file" name="picfile" class="styled"
+                class="span12">
+            </div>
+            <div class="span4">
+                <label class="control-label">添加视频</label><input type="file" name="videofile" class="styled"
+                class="span12">
+            </div>
+            <div class="span4">
+                <label class="control-label">&nbsp</label>
+                <button type="submit" class="btn-small btn-primary pull-left">确定添加</button>
+            </div>
+        </form>
+        </div>
+        <br><br><br>
+    </div>
+</div>
+
+<!-- Media datatable -->
+<div class="widget">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <h6>匹配结果</h6>
+            <div class="nav pull-right">
+                <a href="#" class="dropdown-toggle navbar-icon" data-toggle="dropdown"><i class="icon-cog"></i></a>
+                <!--ul class="dropdown-menu pull-right">
+                    <li><a href="#"><i class="icon-plus"></i>Add new option</a></li>
+                    <li><a href="#"><i class="icon-reorder"></i>View statement</a></li>
+                    <li><a href="#"><i class="icon-cogs"></i>Parameters</a></li>
+                </ul-->
+            </div>
+        </div>
+    </div>
+    <div class="view">
+        <iframe height=700 width=960 src={{mp4}} alt="please upload file to search"></iframe>
+    </div>
+</div>
+<!-- /media datatable -->
+
+{% endblock %}
+
+{% block tailscript %}
+
+<script>
+    //untoggleSidebarItems();
+    //$("#navadd").toggleClass("active");
+</script>
+
+{% endblock %}
